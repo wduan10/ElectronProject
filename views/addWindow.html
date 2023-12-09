@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Item</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div>Register</div>
+        <form>
+            <label>Name</label>
+            <input type="text" id="name" />
+            <label>Email</label>
+            <input type="email" id="email" />
+            <label>Password</label>
+            <input type="password" id="password" />
+            <label>Retype Password</label>
+            <input type="password" id="retype" />
+            <button>Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', handleForm);
+
+        function handleForm(event) {
+            event.preventDefault();
+            const formData = {
+                name: document.querySelector("#name").value,
+                email: document.querySelector("#email").value,
+                password: document.querySelector("#password").value,
+                retype: document.querySelector("#retype").value
+            }
+            ipcRenderer.send('register', formData);
+        }
+    </script>
+</body>
+</html>
